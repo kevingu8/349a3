@@ -42,7 +42,7 @@ export class ToolBar  implements Observer {
     // this.margin = 8;
 
     this.container = document.createElement("div");
-    this.container.className = "middle";
+    this.root.className = "toolbar";
 
     this.allButton.innerText = "All";
     this.noneButton.innerText = "None";
@@ -56,19 +56,19 @@ export class ToolBar  implements Observer {
 
     
     // Controllers
-    this.allButton.addEventListener("action", () => {
+    this.allButton.addEventListener("click", () => {
       this.model.selectAllEvents();
     });
 
-    this.noneButton.addEventListener("action", () => {
+    this.noneButton.addEventListener("click", () => {
       this.model.deselectAllEvents();
     });
 
-    this.deleteButton.addEventListener("action", () => {
+    this.deleteButton.addEventListener("click", () => {
       this.model.removeSelectedEvent();
     });
 
-    this.addButton.addEventListener("action", () => {
+    this.addButton.addEventListener("click", () => {
       this.model.addEvent();
     });
 
@@ -76,9 +76,9 @@ export class ToolBar  implements Observer {
   }
 
   update() {
-    // this.deleteButton.state = this.model.numberSelectedEvents > 0 ? "idle" : "disabled";
-    // this.allButton.state = this.model.numberSelectedEvents === this.model.numberEvents ? "disabled" : "idle";
-    // this.noneButton.state = this.model.numberSelectedEvents === 0 ? "disabled" : "idle";
-    // this.addButton.state = this.model.numberEvents === 10 ? "disabled" : "idle";
+    this.deleteButton.disabled = !(this.model.numberSelectedEvents > 0);
+    this.allButton.disabled = this.model.numberSelectedEvents === this.model.numberEvents;
+    this.noneButton.disabled = this.model.numberSelectedEvents === 0;
+    this.addButton.disabled = this.model.numberEvents === 10;
   }
 }

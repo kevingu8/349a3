@@ -38,7 +38,7 @@ export class ModeSwitch implements Observer {
     this.agendaButton.innerText = "Agenda";
     this.overviewButton.innerText = "Overview";
 
-    this.agendaButton.addEventListener("action", () => {
+    this.agendaButton.addEventListener("click", () => {
       if (this.model.numberSelectedEvents > 0) {
         model.curEvent = this.model.selectedEvents[0];
         model.curEventIdx = 1;
@@ -46,7 +46,7 @@ export class ModeSwitch implements Observer {
       }
     });
 
-    this.overviewButton.addEventListener("action", () => {
+    this.overviewButton.addEventListener("click", () => {
       model.setMode('Overview');
     });
 
@@ -55,17 +55,17 @@ export class ModeSwitch implements Observer {
   }
 
   update() {
-    // this.root.replaceChildren();
-    // this.agendaButton.state =  this.model.selectedEvents.length === 0 ? "disabled" : "idle";
+    this.root.replaceChildren();
+    this.agendaButton.disabled =  this.model.selectedEvents.length === 0;
 
-    // if (this.model.getMode() === "Overview") {
-    //   this.root.appendChild(this.filler)
-    //   this.root.appendChild(this.agendaButton);
-    //   this.fill = "lightgray"
-    // } else {
-    //   this.root.appendChild(this.filler)
-    //   this.root.appendChild(this.overviewButton);
-    //   this.fill = "lightblue"
-    // }
+    if (this.model.getMode() === "Overview") {
+      // this.root.appendChild(this.filler)
+      this.root.appendChild(this.agendaButton);
+      // this.fill = "lightgray"
+    } else {
+      // this.root.appendChild(this.filler)
+      this.root.appendChild(this.overviewButton);
+      // this.fill = "lightblue"
+    }
   }
 }

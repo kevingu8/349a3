@@ -1,8 +1,8 @@
 import { Observer } from "../../observer";
 import { Model } from "../../model";
-import "./agendaview.css"
+import "./agendaview.css";
 
-export class agendaView  implements Observer {
+export class agendaView implements Observer {
   // prevButton = new SKButton({
   //   text: "Previous",
   //   width: 80,
@@ -11,13 +11,11 @@ export class agendaView  implements Observer {
   // nextButton = new SKButton({
   //   text: "Next",
   //   width: 80,
-    
+
   // });
 
   prevButton = document.createElement("button");
   nextButton = document.createElement("button");
-
-  
 
   buttonsContainer = document.createElement("div");
 
@@ -46,14 +44,12 @@ export class agendaView  implements Observer {
     // this.margin = 8;
     // this.border = "1px solid black";
 
-
     this.container = document.createElement("div");
 
-    this.container.className      = "agenda-view";
+    this.container.className = "agenda-view";
     this.buttonsContainer.className = "buttons-container";
-    this.filler.className         = "filler";
-    this.desc.className           = "agenda-desc";  // note: rename your “desc” field to match the class name
-
+    this.filler.className = "filler";
+    this.desc.className = "agenda-desc"; // note: rename your “desc” field to match the class name
 
     this.prevButton.innerText = "Previous";
     this.nextButton.innerText = "Next";
@@ -82,25 +78,32 @@ export class agendaView  implements Observer {
   // });
 
   update() {
-    // this.root.replaceChildren();
-    // this.desc.replaceChildren();
+    this.root.replaceChildren();
+    this.desc.replaceChildren();
+    const description = document.createElement("span");
+    description.innerText = `${this.model.curEvent.description}`;
+    description.className = "description";
+    this.desc.appendChild(description);
     // this.desc.appendChild(new SKLabel({
     //   text: `${this.model.curEvent.description}`,
     //   fillWidth: 1,
     //   height: 50,
     //   fillHeight: 1,
     // }))
+
+    const daytime_label = document.createElement("span");
+    daytime_label.innerText = `${this.model.day_of_week[this.model.curEvent.day]} ${this.model.curEvent.start}:00 - ${this.model.curEvent.end}:00`;
+    daytime_label.className = "daytime-label"
+    this.desc.appendChild(daytime_label);
     // this.desc.appendChild(new SKLabel({
     //   text: `${this.model.day_of_week[this.model.curEvent.day]} ${this.model.curEvent.start}:00 - ${this.model.curEvent.end}:00`,
     //   height: 50,
     //   fillWidth: 1,
     //   fillHeight: 1,
     // }))
-
-    // this.prevButton.state = this.model.curEventIdx > 1 ? "idle" : "disabled";
-    // this.nextButton.state = this.model.curEventIdx < this.model.numberSelectedEvents ? "idle" : "disabled";
-
-    // this.root.appendChild(this.desc);
-    // this.root.appendChild(this.buttonsContainer);
+    this.prevButton.disabled = !(this.model.curEventIdx > 1);
+    this.nextButton.disabled = this.model.curEventIdx >= this.model.numberSelectedEvents;
+    this.root.appendChild(this.desc);
+    this.root.appendChild(this.buttonsContainer);
   }
 }

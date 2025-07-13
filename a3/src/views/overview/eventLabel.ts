@@ -10,7 +10,11 @@ export class EventLabel  implements Observer {
   //   margin: 4,
   // });
 
-  checkBox = document.createElement("input").type = "checkbox";
+  // checkBox = document.createElement("input").type = "checkbox";
+
+
+  checkbox = document.createElement('input') as HTMLInputElement;
+  
 
 
   private container: HTMLDivElement;
@@ -27,21 +31,26 @@ export class EventLabel  implements Observer {
     // this.margin = 4;
 
     this.container = document.createElement("div");
+    this.checkbox.type    = 'checkbox';          // make it a checkbox
+    this.checkbox.id      = 'accept-terms';      // give it an ID
+    this.checkbox.name    = 'accept';            // form name (if inside a <form>)
+    this.checkbox.value   = 'yes';               // submitted value when checked
+    this.checkbox.checked = this.event.selected;               // default state
 
-    this.checkBox.selected = this.event.selected;
-    this.root.appendChild(this.checkBox);
+    this.root.appendChild(this.checkbox);
 
-    this.addChild(
-      new SKLabel({
-        text: this.event.description,
-      })
+    const la = document.createElement("label");
+    la.innerText = this.event.description;
+
+    this.container.appendChild(
+      la
     );
 
 
-    this.checkBox.addEventListener("click", () => {
+    this.checkbox.addEventListener("click", () => {
       this.model.selectEvent(this.event);
       console.log("Event selected:", this.event);
-      this.checkBox.selected = this.event.selected;
+      this.checkbox.checked = this.event.selected;
     });
 
     this.container.addEventListener("dblclick", () => {

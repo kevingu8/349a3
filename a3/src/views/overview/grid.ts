@@ -1,61 +1,72 @@
-import { Layout, SKContainer, SKLabel } from "simplekit/imperative-mode";
 import { Observer } from "../../observer";
 import { Model } from "../../model";
 import { DayBody } from "./dayBody";
-import { StackColLayout } from "../../layouts/stackCol";
 
-export class Grid extends SKContainer implements Observer {
+export class Grid  implements Observer {
 
-  dayLabels = new SKContainer(
-    {
-      id: "day-labels",
-      fillWidth: 1,
-      fillHeight: 1,
-      layoutMethod: new Layout.FillRowLayout({ gap: 4 }),
-      border: "1px solid black",
-    }
-  );
+  // dayLabels = new SKContainer(
+  //   {
+  //     id: "day-labels",
+  //     fillWidth: 1,
+  //     fillHeight: 1,
+  //     layoutMethod: new Layout.FillRowLayout({ gap: 4 }),
+  //     border: "1px solid black",
+  //   }
+  // );
 
-  dayBodies = new SKContainer({
-    id: "day-bodies",
-    fillWidth: 1,
-    fillHeight: 1,
-    layoutMethod: new Layout.FillRowLayout({ gap: 4 }),
-    margin: 4,
-  });
+  dayLabels = document.createElement("div");
+  dayBodies = document.createElement("div");
+
+  // dayBodies = new SKContainer({
+  //   id: "day-bodies",
+  //   fillWidth: 1,
+  //   fillHeight: 1,
+  //   layoutMethod: new Layout.FillRowLayout({ gap: 4 }),
+  //   margin: 4,
+  // });
+
+  private container: HTMLDivElement;
+  get root(): HTMLDivElement {
+    return this.container;
+  }
 
   constructor(private model: Model) {
-    super();
-    this.id = "middle";
-    this.fillWidth = 1;
-    this.fillHeight = 1;
-    this.border = "1px solid black";
 
-    this.layoutMethod = new StackColLayout();
 
-    this.addChild(this.dayLabels);
-    this.addChild(this.dayBodies);
+    this.container = document.createElement("div");
+    this.container.className = "middle";
+
+    // this.fillWidth = 1;
+    // this.fillHeight = 1;
+    // this.border = "1px solid black";
+
+
+    this.root.appendChild(this.dayLabels);
+    this.root.appendChild(this.dayBodies);
     this.model.addObserver(this);
   }
 
   update() {
-    this.dayLabels.clearChildren();
-    this.dayBodies.clearChildren();
+    this.dayLabels.replaceChildren();
+    this.dayBodies.replaceChildren();
 
     this.model.day_of_week.forEach((day, index) => {
-      const dayLabel = new SKLabel({
-        text: day,
-        fillWidth: 1,
-      });
+      const dayLabel = document.createElement("span");
+      dayLabel.innerText = day;
+      
+      // new SKLabel({
+      //   text: day,
+      //   fillWidth: 1,
+      // });
 
-      dayLabel.font = "12pt sans-serif";
+      // dayLabel.font = "12pt sans-serif";
       
     
       const number_day = index
       const dayBody = new DayBody(this.model, number_day);
 
-      this.dayLabels.addChild(dayLabel);
-      this.dayBodies.addChild(dayBody);
+      this.dayLabels.appendChild(dayLabel);
+      this.dayBodies.appendChild(dayBody.root);
     });
   }
 }

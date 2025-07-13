@@ -1,19 +1,15 @@
-import {
-  Layout,
-  SKButton,
-  SKContainer,
-  SKLabel,
-  SKTextfield,
-} from "simplekit/imperative-mode";
+
 import { Observer } from "../observer";
 import { Model } from "../model";
-import { StackColLayout } from "../layouts/stackCol";
-import { SKQuantityWidget } from "../widgets/quantity";
+import { QuantityWidget } from "../widgets/quantity";
 
-export class ModifyView extends SKContainer implements Observer {
+export class ModifyView implements Observer {
   private filler = new SKContainer({
     fillWidth: 1,
   });
+
+  this.container = document.createElement("div");
+  
 
   update() {
     this.clearChildren();
@@ -116,9 +112,9 @@ export class ModifyView extends SKContainer implements Observer {
   }
 
   descriptionField: SKTextfield = new SKTextfield();
-  dayOfWeekWidget: SKQuantityWidget = new SKQuantityWidget();
-  startTimeWidget: SKQuantityWidget = new SKQuantityWidget();
-  endTimeWidget: SKQuantityWidget = new SKQuantityWidget();
+  dayOfWeekWidget: QuantityWidget = new QuantityWidget();
+  startTimeWidget: QuantityWidget = new QuantityWidget();
+  endTimeWidget: QuantityWidget = new QuantityWidget();
 
   saveButton = new SKButton({
     text: "Save",
@@ -130,6 +126,11 @@ export class ModifyView extends SKContainer implements Observer {
     width: 80,
     margin: 8,
   });
+
+  private container: HTMLDivElement;
+  get root(): HTMLDivElement {
+    return this.container;
+  }
 
   constructor(private model: Model) {
     super();
@@ -146,7 +147,7 @@ export class ModifyView extends SKContainer implements Observer {
     this.layoutMethod = new StackColLayout();
 
     // setup the view design
-    this.dayOfWeekWidget = new SKQuantityWidget({
+    this.dayOfWeekWidget = new QuantityWidget({
       counter: this.model.editingEvent.day,
       min_value: 0,
       max_value: 6,
@@ -157,7 +158,7 @@ export class ModifyView extends SKContainer implements Observer {
       },
     });
 
-    this.startTimeWidget = new SKQuantityWidget({
+    this.startTimeWidget = new QuantityWidget({
       counter: this.model.editingEvent.start,
       min_value: 0,
       max_value: 23,
@@ -167,7 +168,7 @@ export class ModifyView extends SKContainer implements Observer {
       },
     });
 
-    this.endTimeWidget = new SKQuantityWidget({
+    this.endTimeWidget = new QuantityWidget({
       counter: this.model.editingEvent.end,
       min_value: 0,
       max_value: 23,

@@ -1,27 +1,10 @@
-import {
-  startSimpleKit,
-  setSKRoot,
-  SKContainer,
-  Layout,
-} from "simplekit/imperative-mode";
 
 import { Model } from "./model";
 import { MainView } from "./views/mainView";
-import { ModifyView } from "./views/modifyView";
-import { FrontToBackLayout } from "./layouts/frontToBackLayout";
 
 const model = new Model();
 
-const root = new SKContainer({
-  id: "root",
-  fillWidth: 1,
-  fillHeight: 1,
-  layoutMethod: new Layout.FillRowLayout(),
-});
+const root = document.querySelector("div#app") as HTMLDivElement
 
-root.addChild(new MainView(model));
+root.append(new MainView(model).root);
 
-
-setSKRoot(root);
-
-startSimpleKit();

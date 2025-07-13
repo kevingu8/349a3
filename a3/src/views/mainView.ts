@@ -1,36 +1,37 @@
-import { SKContainer } from "simplekit/imperative-mode";
 import { Observer } from "../observer";
 import { Model } from "../model";
-import { FrontToBackLayout } from "../layouts/frontToBackLayout";
 import { InnerView } from "./innerView";
 import { ModifyView } from "./modifyView";
 
-export class MainView extends SKContainer implements Observer {
+export class MainView  implements Observer {
   update() {
-   this.clearChildren();
+   this.root.replaceChildren();
     if (this.model.edit) {
-      this.addChild(new InnerView(this.model));
-      this.addChild(new ModifyView(this.model));
+      this.root.appendChild(new InnerView(this.model).root);
+      this.root.appendChild(new ModifyView(this.model).root);
     }
     else {
-      this.addChild(new InnerView(this.model));
+      this.root.appendChild(new InnerView(this.model).root);
     }
   }
 
+ private container: HTMLDivElement;
+  get root(): HTMLDivElement {
+    return this.container;
+  } 
+
 
   constructor(private model: Model) {
-    super();
+    this.container = document.createElement("div");
+    this.container.className = "main";
 
-    this.id = "main";
 
 
     // setup the view design
-    this.fillWidth = 1;
-    this.fillHeight = 1;
+    // this.fillWidth = 1;
+    // this.fillHeight = 1;
 
-    this.layoutMethod = new FrontToBackLayout(),
-
-    this.addChild(new InnerView(model));
+    this.root.appendChild(new InnerView(model).root);
 
     // controllers
 

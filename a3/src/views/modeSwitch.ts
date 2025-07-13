@@ -1,38 +1,41 @@
-import { Layout, SKContainer } from "simplekit/imperative-mode";
-import { SKButton } from "../widgets/skButton";
 import { Observer } from "../observer";
 import { Model } from "../model";
 
-export class ModeSwitch extends SKContainer implements Observer {
+export class ModeSwitch implements Observer {
 
-  private agendaButton = new SKButton({
-    text: "Agenda",
-    width: 80,
-    margin: 8,
-  });
+  // private agendaButton = new SKButton({
+  //   text: "Agenda",
+  //   width: 80,
+  //   margin: 8,
+  // });
 
-  private filler = new SKContainer({
-    fillWidth: 1,
-  });
+  agendaButton = document.createElement("button");
+  overviewButton = document.createElement("button");
 
-  private overviewButton = new SKButton({
-    text: "Overview",
-    width: 80,
-    margin: 8,
-  });
+
+  // private filler = new SKContainer({
+  //   fillWidth: 1,
+  // });
+
+  // private overviewButton = new SKButton({
+  //   text: "Overview",
+  //   width: 80,
+  //   margin: 8,
+  // });
+
+  private container: HTMLDivElement;
+  get root(): HTMLDivElement {
+        return this.container;
+  }
 
   constructor(private model: Model) {
-    super();
-
-    this.id = "mode-switch";
-
-    // setup the view design
-    this.fillWidth = 1;
-    this.fillHeight = 1;
-  
-    this.layoutMethod = new Layout.FillRowLayout();
 
     // controllers
+    this.container = document.createElement("div");
+    this.container.className = "mode-switch";
+
+    this.agendaButton.innerText = "Agenda";
+    this.overviewButton.innerText = "Overview";
 
     this.agendaButton.addEventListener("action", () => {
       if (this.model.numberSelectedEvents > 0) {
@@ -51,17 +54,17 @@ export class ModeSwitch extends SKContainer implements Observer {
   }
 
   update() {
-    this.clearChildren();
-    this.agendaButton.state =  this.model.selectedEvents.length === 0 ? "disabled" : "idle";
+    // this.root.replaceChildren();
+    // this.agendaButton.state =  this.model.selectedEvents.length === 0 ? "disabled" : "idle";
 
-    if (this.model.getMode() === "Overview") {
-      this.addChild(this.filler)
-      this.addChild(this.agendaButton);
-      this.fill = "lightgray"
-    } else {
-      this.addChild(this.filler)
-      this.addChild(this.overviewButton);
-      this.fill = "lightblue"
-    }
+    // if (this.model.getMode() === "Overview") {
+    //   this.root.appendChild(this.filler)
+    //   this.root.appendChild(this.agendaButton);
+    //   this.fill = "lightgray"
+    // } else {
+    //   this.root.appendChild(this.filler)
+    //   this.root.appendChild(this.overviewButton);
+    //   this.fill = "lightblue"
+    // }
   }
 }

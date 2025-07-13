@@ -1,46 +1,53 @@
-import { SKContainer } from "simplekit/imperative-mode";
 import { Observer } from "../../observer";
 import { Model } from "../../model";
-import { StackColLayout } from "../../layouts/stackCol";
 import { EventLabel } from "./eventLabel";
 
-export class DayBody extends SKContainer implements Observer {
+export class DayBody implements Observer {
   constructor(private model: Model, private day: number) {
-    super();
-    this.id = "middle";
-    this.fillWidth = 1;
-    this.height = 24 * 24
 
-    this.layoutMethod = new StackColLayout();
+    // this.fillWidth = 1;
+    // this.height = 24 * 24
+    this.container = document.createElement("div");
+    this.container.className = "middle";
 
     this.model.addObserver(this);
   }
 
+  private container: HTMLDivElement;
+  get root(): HTMLDivElement {
+    return this.container;
+  }
+
   update() {
-    this.clearChildren();
+    this.root.replaceChildren();
     const todayEvents = this.model.getEventsByDay(this.day);
     todayEvents.sort((a, b) => a.start - b.start);
     todayEvents.forEach((event, index) => {
 
       if (index === 0) {
         const topPadding = 24 * event.start; // 24px per hour
-        const topSeparator = new SKContainer({
-          height: topPadding,
-          fill: "lightgray",
-        });
-        this.addChild(topSeparator);
+        const topSeparator = document.createElement("div");
+        
+        
+        // new SKContainer({
+        //   height: topPadding,
+        //   fill: "lightgray",
+        // });
+        this.root.appendChild(topSeparator);
       }
 
       const eventLabel = new EventLabel(this.model, event);
-      this.addChild(eventLabel);
+      this.root.appendChild(eventLabel.root);
 
       if (index < todayEvents.length - 1) {
         const nextEvent = todayEvents[index + 1];
-        const separator = new SKContainer({
-          height: 24 * (nextEvent.start - event.end),
-          fill: "lightgray",
-        });
-        this.addChild(separator);
+        const separator = document.createElement("div");
+        
+        // new SKContainer({
+        //   height: 24 * (nextEvent.start - event.end),
+        //   fill: "lightgray",
+        // });
+        this.root.appendChild(separator);
       }
     });
   }

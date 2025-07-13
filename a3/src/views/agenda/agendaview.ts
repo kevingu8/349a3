@@ -1,5 +1,6 @@
 import { Observer } from "../../observer";
 import { Model } from "../../model";
+import "./agendaview.css"
 
 export class agendaView  implements Observer {
   // prevButton = new SKButton({
@@ -15,6 +16,8 @@ export class agendaView  implements Observer {
 
   prevButton = document.createElement("button");
   nextButton = document.createElement("button");
+
+  
 
   buttonsContainer = document.createElement("div");
 
@@ -45,7 +48,12 @@ export class agendaView  implements Observer {
 
 
     this.container = document.createElement("div");
-    this.container.className = "middle";
+
+    this.container.className      = "agenda-view";
+    this.buttonsContainer.className = "buttons-container";
+    this.filler.className         = "filler";
+    this.desc.className           = "agenda-desc";  // note: rename your “desc” field to match the class name
+
 
     this.prevButton.innerText = "Previous";
     this.nextButton.innerText = "Next";

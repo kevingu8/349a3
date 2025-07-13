@@ -1,5 +1,6 @@
 import { Observer } from "../../observer";
 import { Model } from "../../model";
+import "./toolBar.css"
 
 export class ToolBar  implements Observer {
 

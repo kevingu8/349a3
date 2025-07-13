@@ -1,0 +1,38 @@
+/* event-label.css */
+
+.event-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;                  /* space between checkbox and text */
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.event-label:hover {
+  background-color: #f5faff; /* light hover highlight */
+}
+
+.event-label input[type="checkbox"] {
+  margin: 0;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+.event-label label {
+  flex: 1 1 auto;            /* take up remaining space */
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0;                 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* when an event is selected, add `.selected` on the container */
+.event-label.selected {
+  background-color: #e0f0ff; /* stronger selected highlight */
+}

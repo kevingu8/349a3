@@ -2,6 +2,7 @@ import { Observer } from "../observer";
 import { ToolBar } from "./overview/toolBar";
 import { Grid } from "./overview/grid";
 import { Model } from "../model";
+import "./middle.css"
 
 export class Middle  implements Observer {
 

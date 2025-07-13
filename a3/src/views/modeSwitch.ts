@@ -1,5 +1,6 @@
 import { Observer } from "../observer";
 import { Model } from "../model";
+import "./modeSwtich.css"
 
 export class ModeSwitch implements Observer {
 

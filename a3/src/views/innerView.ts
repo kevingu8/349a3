@@ -4,6 +4,7 @@ import { Middle } from "./middle";
 import { ModeSwitch } from "./modeSwitch";
 import { Status } from "./status";
 import { agendaView } from "./agenda/agendaview";
+import "./innerView.css"
 
 export class InnerView  implements Observer {
   update() {

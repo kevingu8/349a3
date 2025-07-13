@@ -1,5 +1,6 @@
 import { Observer } from "../observer";
 import { Model } from "../model";
+import "./status.css"
 
 export class Status implements Observer {
 

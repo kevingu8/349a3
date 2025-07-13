@@ -1,6 +1,7 @@
 import { Observer } from "../../observer";
 import { Model } from "../../model";
 import { Event } from "../../model";
+import "./eventLabel.css"
 
 export class EventLabel  implements Observer {
   // checkBox = new SKCheckBox({

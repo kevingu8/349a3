@@ -1,0 +1,103 @@
+/* ===========================
+   modify-view.css
+   Styles for ModifyView.ts
+   ===========================*/
+
+/* 1. Root container of the ModifyView.
+   In your TS: this.container.className = "modify-view"; */
+.modify-view {
+  display: flex;                /* stack sections vertically */
+  flex-direction: column;
+  gap: 16px;                    /* space between each section */
+  padding: 24px;                /* inner spacing */
+  background-color: #fafafa;    /* light background */
+  border: 1px solid #ddd;       /* subtle border */
+  border-radius: 8px;
+  max-width: 400px;             /* constrain width */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* 2. Common style for each row/section
+   (description, day-of-week, start-time, end-time) */
+#modify-description,
+#day-of-week,
+#start-time,
+#end-time {
+  display: flex;
+  align-items: center;
+  /* use the filler div (flex:1) to push label + widget to center */
+  margin: 8px 0;                
+}
+
+/* 3. Spacer element to flexibly push items apart
+   In your TS: this.filler.id = "filler"; */
+#filler {
+  flex: 1;                      
+}
+
+/* 4. Label text in each section
+   className = "modifyView-texts" on your <span> */
+.modifyView-texts {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0 8px;                /* little space around text */
+  white-space: nowrap;
+}
+
+/* 5. Input field for description
+   id = "description-field" */
+#description-field {
+  flex: 2;                      /* take most of the remaining space */
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* 6. QuantityWidget roots (for day, start, end)
+   you may need to add a class on QuantityWidget.root, e.g. .quantity-widget
+   and then style here, for example: */
+/*
+.quantity-widget {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+*/
+
+/* 7. Buttons container
+   In your TS: Buttons.className = "modify-view-buttons"; */
+.modify-view-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* 8. Save & Cancel button base styles */
+.modify-view-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* 9. Save button (give it id="save-button") */
+#save-button {
+  background-color: #4caf50;
+  color: white;
+}
+#save-button:hover {
+  background-color: #45a049;
+}
+
+/* 10. Cancel button (give it id="cancel-button") */
+#cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+#cancel-button:hover {
+  background-color: #e53935;
+}

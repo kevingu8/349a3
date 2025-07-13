@@ -2,6 +2,7 @@
 import { Observer } from "../observer";
 import { Model } from "../model";
 import { QuantityWidget } from "../widgets/quantity";
+import "./modifyView.css"
 
 export class ModifyView implements Observer {
   // private filler = new SKContainer({
@@ -11,7 +12,7 @@ export class ModifyView implements Observer {
 
   private container = document.createElement("div");
 
-  get root(): HTMLDivElement {
+   get root(): HTMLDivElement {
     return this.container
   }
 

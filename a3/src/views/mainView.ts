@@ -2,6 +2,7 @@ import { Observer } from "../observer";
 import { Model } from "../model";
 import { InnerView } from "./innerView";
 import { ModifyView } from "./modifyView";
+import "./mainView.css"
 
 export class MainView implements Observer {
   update() {

@@ -1,6 +1,7 @@
 import { Observer } from "../../observer";
 import { Model } from "../../model";
 import { DayBody } from "./dayBody";
+import "./grid.css"
 
 export class Grid  implements Observer {
 
@@ -15,6 +16,7 @@ export class Grid  implements Observer {
   // );
 
   dayLabels = document.createElement("div");
+  
   dayBodies = document.createElement("div");
 
   // dayBodies = new SKContainer({
@@ -34,7 +36,10 @@ export class Grid  implements Observer {
 
 
     this.container = document.createElement("div");
-    this.container.className = "middle";
+    this.container.className = "grid";
+
+    this.dayLabels.className = "day-labels";
+    this.dayBodies.className = "day-bodies";
 
     // this.fillWidth = 1;
     // this.fillHeight = 1;

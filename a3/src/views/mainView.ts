@@ -3,7 +3,7 @@ import { Model } from "../model";
 import { InnerView } from "./innerView";
 import { ModifyView } from "./modifyView";
 
-export class MainView  implements Observer {
+export class MainView implements Observer {
   update() {
    this.root.replaceChildren();
     if (this.model.edit) {

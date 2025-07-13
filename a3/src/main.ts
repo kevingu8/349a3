@@ -6,5 +6,5 @@ const model = new Model();
 
 const root = document.querySelector("div#app") as HTMLDivElement
 
-root.append(new MainView(model).root);
+root.appendChild(new MainView(model).root);
 

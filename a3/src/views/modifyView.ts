@@ -4,148 +4,156 @@ import { Model } from "../model";
 import { QuantityWidget } from "../widgets/quantity";
 
 export class ModifyView implements Observer {
-  private filler = new SKContainer({
-    fillWidth: 1,
-  });
+  // private filler = new SKContainer({
+  //   fillWidth: 1,
+  // });
+  private filler = document.createElement("div");
 
-  this.container = document.createElement("div");
-  
+  private container = document.createElement("div");
+
+  get root(): HTMLDivElement {
+    return this.container
+  }
 
   update() {
-    this.clearChildren();
-    const description = new SKContainer({
-      id: "modify-description",
-      fillWidth: 1,
-      layoutMethod: new Layout.FillRowLayout(),
-    });
+    this.container.replaceChildren();
 
-    const dayOfWeek = new SKContainer({
-      id: "day-of-week",
-      fillWidth: 1,
-      layoutMethod: new Layout.FillRowLayout(),
-      margin: 8,
-    });
+    // const description = new SKContainer({
+    //   id: "modify-description",
+    //   fillWidth: 1,
+    //   layoutMethod: new Layout.FillRowLayout(),
+    // });
+    const description = document.createElement("div")
+    description.id = "modify-description"
 
-    const startTime = new SKContainer({
-      id: "start-time",
-      fillWidth: 1,
-      layoutMethod: new Layout.FillRowLayout(),
-      margin: 8,
-    });
+    // const dayOfWeek = new SKContainer({
+    //   id: "day-of-week",
+    //   fillWidth: 1,
+    //   layoutMethod: new Layout.FillRowLayout(),
+    //   margin: 8,
+    // });
+    const dayOfWeek = document.createElement("div");
+    dayOfWeek.id = "day-of-week";
 
-    const endTime = new SKContainer({
-      id: "end-time",
-      fillWidth: 1,
-      layoutMethod: new Layout.FillRowLayout(),
-      margin: 8,
-    });
+    // const startTime = new SKContainer({
+    //   id: "start-time",
+    //   fillWidth: 1,
+    //   layoutMethod: new Layout.FillRowLayout(),
+    //   margin: 8,
+    // });
+    const startTime = document.createElement("div");
+    startTime.id = "start-time";
 
-    const Buttons = new SKContainer({
-      fillWidth: 1,
-      layoutMethod: new Layout.FillRowLayout(),
-      margin: 8,
-    });
+    // const endTime = new SKContainer({
+    //   id: "end-time",
+    //   fillWidth: 1,
+    //   layoutMethod: new Layout.FillRowLayout(),
+    //   margin: 8,
+    // });
+    const endTime = document.createElement("div");
+    endTime.id = "end-time";
 
-    this.descriptionField = new SKTextfield({
-      id: "description-field",
-      text: this.model.editingEvent.description,
-      width: 200,
-      margin: 8,
-    });
+    // const Buttons = new SKContainer({
+    //   fillWidth: 1,
+    //   layoutMethod: new Layout.FillRowLayout(),
+    //   margin: 8,
+    // });
+    const Buttons = document.createElement("div");
+
+    // this.descriptionField = new SKTextfield({
+    //   id: "description-field",
+    //   text: this.model.editingEvent.description,
+    //   width: 200,
+    //   margin: 8,
+    // });
+    this.descriptionField = document.createElement("input");
+    this.descriptionField.id = "description-field";
 
     this.dayOfWeekWidget.counter = this.model.editingEvent.day;
     this.startTimeWidget.counter = this.model.editingEvent.start;
     this.endTimeWidget.counter = this.model.editingEvent.end;
 
-    description.addChild(this.filler);
-    description.addChild(
-      new SKLabel({
-        width: 128,
-        text: "Description",
-        margin: 4,
-      })
-    );
-    description.addChild(this.descriptionField);
-    description.addChild(this.filler);
-    this.addChild(description);
+    description.appendChild(this.filler);
 
-    dayOfWeek.addChild(this.filler);
-    dayOfWeek.addChild(
-      new SKLabel({
-        width: 128,
-        text: "Day of Week",
-        margin: 4,
-      })
-    );
-    dayOfWeek.addChild(this.dayOfWeekWidget);
-    dayOfWeek.addChild(this.filler);
-    this.addChild(dayOfWeek);
+    const descriptionText = document.createElement("span");
+    descriptionText.innerText = "Description";
+    descriptionText.className = "modifyView-texts"
+    description.appendChild(descriptionText);
+    description.appendChild(this.descriptionField);
+    description.appendChild(this.filler);
 
-    startTime.addChild(this.filler);
-    startTime.addChild(
-      new SKLabel({
-        width: 128,
-        text: "Start Time",
-        margin: 4,
-      })
-    );
-    startTime.addChild(this.startTimeWidget);
-    startTime.addChild(this.filler);
-    this.addChild(startTime);
+    this.root.appendChild(description);
 
-    endTime.addChild(this.filler);
-    endTime.addChild(
-      new SKLabel({
-        width: 128,
-        text: "End Time",
-        margin: 4,
-      })
-    );
-    endTime.addChild(this.endTimeWidget);
-    endTime.addChild(this.filler);
-    this.addChild(endTime);
 
-    Buttons.addChild(this.filler);
-    Buttons.addChild(this.saveButton);
-    Buttons.addChild(this.cancelButton);
-    this.addChild(Buttons);
+    const dayOfWeekText = document.createElement("span");
+    dayOfWeekText.innerText = "Day of Week";
+    dayOfWeekText.className = "modifyView-texts";
+    dayOfWeek.appendChild(this.filler);
+    dayOfWeek.appendChild(dayOfWeekText);
+    dayOfWeek.appendChild(this.dayOfWeekWidget.root);
+    dayOfWeek.appendChild(this.filler);
+
+    this.root.appendChild(dayOfWeek);
+
+
+    const startTimeText = document.createElement("span");
+    startTimeText.innerText = "Start Time";
+    startTimeText.className = "modifyView-texts";
+    startTime.appendChild(this.filler);
+    startTime.appendChild(startTimeText);
+    startTime.appendChild(this.startTimeWidget.root);
+    startTime.appendChild(this.filler);
+    this.root.appendChild(startTime);
+
+
+    const endTimeText = document.createElement("span")
+    endTimeText.innerText = "End Time";
+    endTimeText.className = "modifyView-texts";
+    endTime.appendChild(this.filler);
+    endTime.appendChild(endTimeText);
+    endTime.appendChild(this.endTimeWidget.root);
+    endTime.appendChild(this.filler);
+    this.root.appendChild(endTime);
+
+    Buttons.appendChild(this.filler);
+    Buttons.appendChild(this.saveButton);
+    Buttons.appendChild(this.cancelButton);
+    this.root.appendChild(Buttons);
   }
 
-  descriptionField: SKTextfield = new SKTextfield();
+  // descriptionField: SKTextfield = new SKTextfield();
+  descriptionField: HTMLInputElement = document.createElement("input");
   dayOfWeekWidget: QuantityWidget = new QuantityWidget();
   startTimeWidget: QuantityWidget = new QuantityWidget();
   endTimeWidget: QuantityWidget = new QuantityWidget();
 
-  saveButton = new SKButton({
-    text: "Save",
-    width: 80,
-    margin: 8,
-  });
-  cancelButton = new SKButton({
-    text: "Cancel",
-    width: 80,
-    margin: 8,
-  });
+  // saveButton = new SKButton({
+  //   text: "Save",
+  //   width: 80,
+  //   margin: 8,
+  // });
+  // cancelButton = new SKButton({
+  //   text: "Cancel",
+  //   width: 80,
+  //   margin: 8,
+  // });
 
-  private container: HTMLDivElement;
-  get root(): HTMLDivElement {
-    return this.container;
-  }
+  saveButton = document.createElement("button");
+  cancelButton = document.createElement("button");
 
   constructor(private model: Model) {
-    super();
+    // this.id = "main";
+    // this.fillWidth = 0.5;
+    // this.fillHeight = 0.5;
+    // this.border = "1px solid black";
+    // this.width = 300;
+    // this.height = 500;
+    // this.fill = "whitesmoke";
+    // this.margin = 80;
+    // this.padding = 40;
+    // this.layoutMethod = new StackColLayout();
 
-    this.id = "main";
-    this.fillWidth = 0.5;
-    this.fillHeight = 0.5;
-    this.border = "1px solid black";
-    this.width = 300;
-    this.height = 500;
-    this.fill = "whitesmoke";
-    this.margin = 80;
-    this.padding = 40;
-    this.layoutMethod = new StackColLayout();
-
+    this.filler.id = "filler"
     // setup the view design
     this.dayOfWeekWidget = new QuantityWidget({
       counter: this.model.editingEvent.day,
@@ -183,7 +191,7 @@ export class ModifyView implements Observer {
       if (value + 1 === currentEndTime) {
         if (this.endTimeWidget.counter < 23) {
           this.endTimeWidget.counter += 1;
-          this.endTimeWidget.resetButton.text = this.endTimeWidget.mapping(
+          this.endTimeWidget.resetButton.innerText = this.endTimeWidget.mapping(
             this.endTimeWidget.counter
           );
         } else {
@@ -197,7 +205,7 @@ export class ModifyView implements Observer {
       if (value - 1 === this.startTimeWidget.counter) {
         if (this.startTimeWidget.counter > 0) {
           this.startTimeWidget.counter -= 1;
-          this.startTimeWidget.resetButton.text = this.startTimeWidget.mapping(
+          this.startTimeWidget.resetButton.innerText = this.startTimeWidget.mapping(
             this.startTimeWidget.counter
           );
         } else {
@@ -213,7 +221,7 @@ export class ModifyView implements Observer {
     this.saveButton.addEventListener("action", () => {
       this.model.modifyEvent(
         this.model.editingEvent,
-        this.descriptionField.text,
+        this.descriptionField.innerText,
         this.dayOfWeekWidget.counter,
         this.startTimeWidget.counter,
         this.endTimeWidget.counter

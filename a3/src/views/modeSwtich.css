@@ -12,7 +12,7 @@
   justify-content: flex-end;/* push children to the right */
   align-items: center;      /* vertically center if your bar has height */
   width: 100%;  
-  background-color: whitesmoke;            /* make sure it spans the full bar */
+  background-color: lightgrey;            /* make sure it spans the full bar */
   /* optionally add padding, background, etc. */
 }
 

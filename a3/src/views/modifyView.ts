@@ -18,6 +18,7 @@ export class ModifyView implements Observer {
 
   update() {
     this.container.replaceChildren();
+    this.container.className = "modify-view"
 
     // const description = new SKContainer({
     //   id: "modify-description",
@@ -167,6 +168,9 @@ export class ModifyView implements Observer {
       },
     });
 
+    this.saveButton.innerText = "Save";
+    this.cancelButton.innerText = "Cancel";
+
     this.startTimeWidget = new QuantityWidget({
       counter: this.model.editingEvent.start,
       min_value: 0,
@@ -219,7 +223,7 @@ export class ModifyView implements Observer {
     // layoutMethod = new StackColLayout()
 
     // controllers
-    this.saveButton.addEventListener("action", () => {
+    this.saveButton.addEventListener("click", () => {
       this.model.modifyEvent(
         this.model.editingEvent,
         this.descriptionField.innerText,
@@ -229,7 +233,7 @@ export class ModifyView implements Observer {
       );
     });
 
-    this.cancelButton.addEventListener("action", () => {
+    this.cancelButton.addEventListener("click", () => {
       this.model.cancelModifyEvent();
     });
 

@@ -1,103 +1,114 @@
-/* ===========================
-   modify-view.css
-   Styles for ModifyView.ts
-   ===========================*/
+/* modifyView.css */
 
-/* 1. Root container of the ModifyView.
-   In your TS: this.container.className = "modify-view"; */
+/* The modal dialog itself */
 .modify-view {
-  display: flex;                /* stack sections vertically */
-  flex-direction: column;
-  gap: 16px;                    /* space between each section */
-  padding: 24px;                /* inner spacing */
-  background-color: #fafafa;    /* light background */
-  border: 1px solid #ddd;       /* subtle border */
-  border-radius: 8px;
-  max-width: 400px;             /* constrain width */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
 
-/* 2. Common style for each row/section
-   (description, day-of-week, start-time, end-time) */
-#modify-description,
-#day-of-week,
-#start-time,
-#end-time {
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+
+  /* fill 80% of viewport width and height */
+  width: 80vw;
+  height: 80vh;
+  max-width: 900px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: sans-serif;
+}
+
+/* Each row becomes a two-column grid: label + control */
+.modify-view > #modify-description,
+.modify-view > #day-of-week,
+.modify-view > #start-time,
+.modify-view > #end-time {
+  display: grid;
+  grid-template-columns: 140px 1fr;
   align-items: center;
-  /* use the filler div (flex:1) to push label + widget to center */
-  margin: 8px 0;                
+  gap: 12px;
+  padding: 8px 0;   /* adds vertical space to each row */
 }
 
-/* 3. Spacer element to flexibly push items apart
-   In your TS: this.filler.id = "filler"; */
-#filler {
-  flex: 1;                      
-}
-
-/* 4. Label text in each section
-   className = "modifyView-texts" on your <span> */
+/* Label text styling */
 .modifyView-texts {
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin: 0 8px;                /* little space around text */
-  white-space: nowrap;
+  justify-self: start;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
 }
 
-/* 5. Input field for description
-   id = "description-field" */
-#description-field {
-  flex: 2;                      /* take most of the remaining space */
-  padding: 8px 12px;
+/* Text input and dropdown styling */
+.modify-view input[type="text"],
+.modify-view select {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 0.9rem;
+  height: 32px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
 }
 
-/* 6. QuantityWidget roots (for day, start, end)
-   you may need to add a class on QuantityWidget.root, e.g. .quantity-widget
-   and then style here, for example: */
-/*
-.quantity-widget {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+/* QuantityWidget containers (spinner controls) */
+.modify-view > #day-of-week .quantity-widget,
+.modify-view > #start-time .quantity-widget,
+.modify-view > #end-time .quantity-widget {
+  justify-self: start;
 }
-*/
 
-/* 7. Buttons container
-   In your TS: Buttons.className = "modify-view-buttons"; */
-.modify-view-buttons {
+/* Highlight invalid fields */
+.modify-view input:invalid,
+.modify-view select:invalid {
+  border-color: #e00;
+}
+
+/* Buttons row (last child of the dialog) */
+.modify-view > div:last-child {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 16px;
+  padding-top: 16px;
+  margin-top: auto;   /* push buttons to bottom if there's extra space */
 }
 
-/* 8. Save & Cancel button base styles */
-.modify-view-buttons button {
-  padding: 8px 16px;
-  border: none;
+/* Button base styles */
+.modify-view button {
+  padding: 6px 16px;
+  font-size: 14px;
   border-radius: 4px;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  min-width: 80px;
+  box-sizing: border-box;
 }
 
-/* 9. Save button (give it id="save-button") */
-#save-button {
-  background-color: #4caf50;
-  color: white;
-}
-#save-button:hover {
-  background-color: #45a049;
+/* "Save" button (second child of button row) */
+.modify-view button:nth-child(2) {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
 }
 
-/* 10. Cancel button (give it id="cancel-button") */
-#cancel-button {
-  background-color: #f44336;
-  color: white;
+/* "Cancel" button (third child of button row) */
+.modify-view button:nth-child(3) {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
 }
-#cancel-button:hover {
-  background-color: #e53935;
+
+/* Disabled "Save" state */
+.modify-view button:nth-child(2):disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
 }

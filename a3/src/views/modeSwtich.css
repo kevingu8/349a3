@@ -11,10 +11,10 @@
   display: flex;            /* enable flex layout */
   justify-content: flex-end;/* push children to the right */
   align-items: center;      /* vertically center if your bar has height */
-  width: 100%;              /* make sure it spans the full bar */
+  width: 100%;  
+  background-color: whitesmoke;            /* make sure it spans the full bar */
   /* optionally add padding, background, etc. */
 }
-
 
 /* 2. Base styles for both buttons */
 .mode-switch button {

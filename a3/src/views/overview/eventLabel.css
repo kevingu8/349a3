@@ -9,23 +9,8 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   user-select: none;
-  fill: lightblue
-}
-
-.event-item {
-  display: inline-flex;
-  align-items: center;
   background-color: lightblue;
-  padding: 4px 8px;
-  border-radius: 3px;
-  margin: 2px 0;
-  border: 1px solid black
 }
-
-.event-item input[type="checkbox"] {
-  margin-right: 3px;
-}
-
 
 .checkbox-container {
   background-color: lightblue;
@@ -59,8 +44,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: rgb(1, 13, 18);
-  border: 1px solid black
 }
 
 /* when an event is selected, add `.selected` on the container */

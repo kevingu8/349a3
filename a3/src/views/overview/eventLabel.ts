@@ -16,7 +16,8 @@ export class EventLabel implements Observer {
   constructor(private model: Model, private event: Event) {
     // 1) create wrapper
     this.container = document.createElement("div");
-    this.container.className = "event-item";
+    this.container.className = "event-label";
+    this.container.style.height = `${24 * (event.end - event.start)}`;
 
     // 2) checkbox + unique ID
     this.checkbox = document.createElement("input");

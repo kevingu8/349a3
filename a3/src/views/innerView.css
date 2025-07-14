@@ -10,7 +10,7 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 8px;            /* Adjust to taste */
+  padding: 8px;    /* Adjust to taste */
 }
 
 /* The middle section (either .middle or agendaView) should grow */

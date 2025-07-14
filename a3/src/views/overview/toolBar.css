@@ -7,7 +7,7 @@
   gap: 12px;                    /* space between buttons */
   padding: 8px 16px;            /* inner padding */
   background-color: #fafafa;    /* light neutral background */
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #000;
   box-sizing: border-box;
 }
 

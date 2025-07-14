@@ -1,65 +1,53 @@
 import { Observer } from "../../observer";
-import { Model } from "../../model";
-import { Event } from "../../model";
-import "./eventLabel.css"
+import { Model, Event } from "../../model";
+import "./eventLabel.css";
 
-export class EventLabel  implements Observer {
-  // checkBox = new SKCheckBox({
-  //   selected: false,
-  //   width: 16,
-  //   height: 16,
-  //   margin: 4,
-  // });
-
-  // checkBox = document.createElement("input").type = "checkbox";
-
-
-  checkbox = document.createElement('input') as HTMLInputElement;
-  
-
+export class EventLabel implements Observer {
+  private static _nextUid = 0;
 
   private container: HTMLDivElement;
+  private checkbox: HTMLInputElement;
+  private labelEl: HTMLLabelElement;
+
   get root(): HTMLDivElement {
     return this.container;
   }
 
   constructor(private model: Model, private event: Event) {
-    // super();
-    // this.fillWidth = 1;
-    // this.height = 24 * (event.end - event.start);
-    // this.border = "1px solid black";
-    // this.fill = "lightblue";
-    // this.margin = 4;
-
+    // 1) create wrapper
     this.container = document.createElement("div");
-    this.checkbox.type    = 'checkbox';          // make it a checkbox
-    this.checkbox.id      = 'accept-terms';      // give it an ID
-    this.checkbox.name    = 'accept';            // form name (if inside a <form>)
-    this.checkbox.value   = 'yes';               // submitted value when checked
-    this.checkbox.checked = this.event.selected;               // default state
+    this.container.className = "event-item";
 
-    this.root.appendChild(this.checkbox);
+    // 2) checkbox + unique ID
+    this.checkbox = document.createElement("input");
+    this.checkbox.type = "checkbox";
+    const uid = `evt-${EventLabel._nextUid++}`;
+    this.checkbox.id = uid;
+    this.checkbox.checked = this.event.selected;
+    this.container.appendChild(this.checkbox);
 
-    const la = document.createElement("label");
-    la.innerText = this.event.description;
+    // 3) label linked to that ID
+    this.labelEl = document.createElement("label");
+    this.labelEl.htmlFor = uid;
+    this.labelEl.innerText = this.event.description;
+    this.container.appendChild(this.labelEl);
 
-    this.container.appendChild(
-      la
-    );
-
-
+    // 4) wire up interactions
     this.checkbox.addEventListener("click", () => {
       this.model.selectEvent(this.event);
-      console.log("Event selected:", this.event);
       this.checkbox.checked = this.event.selected;
     });
-
     this.container.addEventListener("dblclick", () => {
       this.model.editEvent(this.event);
     });
 
+    // 5) observe model for external changes
     this.model.addObserver(this);
   }
 
-  update() {}
+  update() {
+    // you can re-sync checked state or description here if needed
+    this.checkbox.checked = this.event.selected;
+    this.labelEl.innerText = this.event.description;
+  }
 }

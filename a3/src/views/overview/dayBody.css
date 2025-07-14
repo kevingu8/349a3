@@ -21,7 +21,7 @@
 /* 3. Spacer blocks between events */
 .day-body .separator {
   width: 100%;
-  background-color: #f0f0f0;  /* light grey gap */
+  background-color: white;  /* light grey gap */
   flex-shrink: 0;             /* preserve the inline height */
 }
 

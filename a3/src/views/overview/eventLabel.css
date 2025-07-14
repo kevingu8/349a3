@@ -9,8 +9,36 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   user-select: none;
+  fill: lightblue
 }
 
+.event-item {
+  display: inline-flex;
+  align-items: center;
+  background-color: lightblue;
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin: 2px 0;
+  border: 1px solid black
+}
+
+.event-item input[type="checkbox"] {
+  margin-right: 3px;
+}
+
+
+.checkbox-container {
+  background-color: lightblue;
+  display: inline-block;    /* shrink-wrap around contents */
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* optional: align the checkbox & label vertically */
+.checkbox-container input,
+.checkbox-container label {
+  vertical-align: middle;
+}
 .event-label:hover {
   background-color: #f5faff; /* light hover highlight */
 }
@@ -20,9 +48,10 @@
   flex: 0 0 auto;
   width: 16px;
   height: 16px;
+  background-color: lightblue;
 }
 
-.event-label label {
+.event-label > label {
   flex: 1 1 auto;            /* take up remaining space */
   font-size: 0.95rem;
   color: #333;
@@ -30,9 +59,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background-color: rgb(1, 13, 18);
+  border: 1px solid black
 }
 
 /* when an event is selected, add `.selected` on the container */
 .event-label.selected {
-  background-color: #e0f0ff; /* stronger selected highlight */
+  background-color: lightblue; /* stronger selected highlight */
 }

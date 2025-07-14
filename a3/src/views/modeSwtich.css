@@ -5,15 +5,16 @@
 
 /* 1. Root container around both buttons
    In your TS: this.container.className = "mode-switch"; */
+/* modeSwitch.css */
+
 .mode-switch {
-  display: flex;
-  align-items: center;
-  gap: 12px;                  /* space between buttons */
-  padding: 8px;               /* inner spacing */
-  background-color: #f0f0f0;  /* light neutral background */
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;            /* enable flex layout */
+  justify-content: flex-end;/* push children to the right */
+  align-items: center;      /* vertically center if your bar has height */
+  width: 100%;              /* make sure it spans the full bar */
+  /* optionally add padding, background, etc. */
 }
+
 
 /* 2. Base styles for both buttons */
 .mode-switch button {

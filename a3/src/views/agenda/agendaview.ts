@@ -60,11 +60,11 @@ export class agendaView implements Observer {
     this.buttonsContainer.appendChild(this.nextButton);
     this.buttonsContainer.appendChild(this.filler);
 
-    this.prevButton.addEventListener("action", () => {
+    this.prevButton.addEventListener("click", () => {
       this.model.prevTask();
     });
 
-    this.nextButton.addEventListener("action", () => {
+    this.nextButton.addEventListener("click", () => {
       this.model.nextTask();
     });
   }

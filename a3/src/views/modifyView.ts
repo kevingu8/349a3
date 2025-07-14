@@ -262,7 +262,7 @@ export class ModifyView implements Observer {
     this.descriptionField.type     = "text";
     this.descriptionField.id       = "description-field";
     this.descriptionField.required = true;
-    this.descriptionField.placeholder = "Enter description";
+    this.descriptionField.value = this.model.editingEvent.description;
 
     // Day-of-Week dropdown
     this.dayOfWeekSelect.id       = "day-of-week-select";

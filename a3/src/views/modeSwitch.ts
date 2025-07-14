@@ -56,6 +56,14 @@ export class ModeSwitch implements Observer {
       model.setMode('Overview');
     });
 
+    this.undoButton.addEventListener("click", () => {
+      model.undo();
+    });
+
+    this.redoButton.addEventListener("click", () => {
+      model.redo();
+    });
+
     // register with the model when we're ready
     this.model.addObserver(this);
   }

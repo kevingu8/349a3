@@ -11,6 +11,7 @@ export type Event = {
 
 export class Model extends Subject {
   private events: Event[] = [];
+  private undoMgr: UndoManager = new UndoManager();
   private all_events: Event[] = eventBank;
   curEvent: Event = eventBank[0];
   curEventIdx = 1;
@@ -30,6 +31,7 @@ export class Model extends Subject {
   constructor() {
     super();
     this.mode = "Overview";
+
     this.initEvents();
     this.curEvent = this.events[0];
     this.curEventIdx = 1;
@@ -146,6 +148,16 @@ export class Model extends Subject {
 
   cancelModifyEvent() {
     this.edit = false;
+    this.notifyObservers();
+  }
+
+  undo() {
+    this.undoMgr.undo();
+    this.notifyObservers();
+  }
+
+  redo() {
+    this.undoMgr.redo();
     this.notifyObservers();
   }
 

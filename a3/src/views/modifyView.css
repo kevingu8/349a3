@@ -30,6 +30,7 @@
 .modify-view > #modify-description {
   display: flex;
   align-items: center;
+  size: 150px;
   gap: 12px;
   padding: 8px 0;
 }
@@ -78,7 +79,7 @@
 .modify-view input[type="text"],
 .modify-view select,
 .modify-view input[type="number"] {
-  width: 100%;
+  size: 150px;
   padding: 6px 8px;
   font-size: 14px;
   height: 32px;

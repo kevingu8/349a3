@@ -2,7 +2,7 @@
 
 .event-label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;                  /* space between checkbox and text */
   padding: 6px 12px;
   border-radius: 4px;
@@ -19,11 +19,6 @@
   border-radius: 4px;
 }
 
-/* optional: align the checkbox & label vertically */
-.checkbox-container input,
-.checkbox-container label {
-  vertical-align: middle;
-}
 .event-label:hover {
   background-color: #f5faff; /* light hover highlight */
 }

@@ -28,7 +28,7 @@
   background-color: #f5faff; /* light hover highlight */
 }
 
-.event-label input[type="checkbox"] {
+.event-label > input {
   margin: 0;
   flex: 0 0 auto;
   width: 16px;

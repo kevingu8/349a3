@@ -1,6 +1,6 @@
 /* modifyView.css */
 
-/* The modal dialog itself */
+/* ─── Modal Dialog ────────────────────────────────────────────────────────── */
 .modify-view {
   position: absolute;
   top: 50%;
@@ -13,7 +13,7 @@
   gap: 16px;
   padding: 24px;
 
-  /* fill 80% of viewport width and height */
+  /* fill 80% of viewport */
   width: 80vw;
   height: 80vh;
   max-width: 900px;
@@ -26,8 +26,37 @@
   font-family: sans-serif;
 }
 
-/* Each row becomes a two-column grid: label + control */
-.modify-view > #modify-description,
+/* ─── DESCRIPTION ROW (flex layout) ──────────────────────────────────────── */
+.modify-view > #modify-description {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+/* label in description row */
+.modify-view > #modify-description .modifyView-texts {
+  width: 140px;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* description input fills remaining space */
+.modify-view > #modify-description input[type="text"] {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 14px;
+  height: 32px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+/* ─── GRID ROWS (Day-of-Week, Start Time, End Time) ───────────────────────── */
 .modify-view > #day-of-week,
 .modify-view > #start-time,
 .modify-view > #end-time {
@@ -35,54 +64,57 @@
   grid-template-columns: 140px 1fr;
   align-items: center;
   gap: 12px;
-  padding: 8px 0;   /* adds vertical space to each row */
+  padding: 8px 0;
 }
 
-/* Label text styling */
+/* ─── LABEL STYLING FOR GRID ROWS ──────────────────────────────────────────── */
 .modifyView-texts {
-  justify-self: start;
+  /* applies to labels in the grid rows */
   font-size: 14px;
   font-weight: 500;
   color: #333;
+  text-align: right;
+  white-space: nowrap;
 }
 
-/* Text input and dropdown styling */
+/* ─── INPUT & SELECT STYLING ──────────────────────────────────────────────── */
 .modify-view input[type="text"],
-.modify-view select {
+.modify-view select,
+.modify-view input[type="number"] {
   width: 100%;
   padding: 6px 8px;
   font-size: 14px;
+  height: 32px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  height: 32px;
   box-sizing: border-box;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
-/* QuantityWidget containers (spinner controls) */
-.modify-view > #day-of-week .quantity-widget,
-.modify-view > #start-time .quantity-widget,
-.modify-view > #end-time .quantity-widget {
-  justify-self: start;
-}
-
-/* Highlight invalid fields */
+/* highlight invalid controls */
 .modify-view input:invalid,
 .modify-view select:invalid {
   border-color: #e00;
+  background-color: #ffe6e6;
 }
 
-/* Buttons row (last child of the dialog) */
+/* remove default spinner margins */
+.modify-view input[type="number"]::-webkit-inner-spin-button,
+.modify-view input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+}
+
+/* ─── BUTTONS ROW ────────────────────────────────────────────────────────── */
 .modify-view > div:last-child {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   padding-top: 16px;
-  margin-top: auto;   /* push buttons to bottom if there's extra space */
+  margin-top: auto;
 }
 
-/* Button base styles */
+/* base button styles */
 .modify-view button {
   padding: 6px 16px;
   font-size: 14px;
@@ -92,22 +124,22 @@
   box-sizing: border-box;
 }
 
-/* "Save" button (second child of button row) */
-.modify-view button:nth-child(2) {
+/* Save = second button in the row */
+.modify-view > div:last-child button:nth-child(2) {
   background-color: #007bff;
   color: #fff;
   border: none;
 }
 
-/* "Cancel" button (third child of button row) */
-.modify-view button:nth-child(3) {
+/* Cancel = third button in the row */
+.modify-view > div:last-child button:nth-child(3) {
   background-color: transparent;
   color: #333;
   border: 1px solid #ccc;
 }
 
-/* Disabled "Save" state */
-.modify-view button:nth-child(2):disabled {
+/* Disabled Save state */
+.modify-view > div:last-child button:nth-child(2):disabled {
   background-color: #e0e0e0;
   color: #999;
   cursor: not-allowed;

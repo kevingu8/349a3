@@ -13,6 +13,9 @@ export class ModeSwitch implements Observer {
   agendaButton = document.createElement("button");
   overviewButton = document.createElement("button");
 
+  undoButton = document.createElement("button");
+  redoButton = document.createElement("button");
+
 
   // private filler = new SKContainer({
   //   fillWidth: 1,
@@ -38,6 +41,9 @@ export class ModeSwitch implements Observer {
     this.agendaButton.innerText = "Agenda";
     this.overviewButton.innerText = "Overview";
 
+    this.undoButton.innerText = "Undo";
+    this.redoButton.innerText = "Redo";
+
     this.agendaButton.addEventListener("click", () => {
       if (this.model.numberSelectedEvents > 0) {
         model.curEvent = this.model.selectedEvents[0];
@@ -61,6 +67,8 @@ export class ModeSwitch implements Observer {
     if (this.model.getMode() === "Overview") {
       // this.root.appendChild(this.filler)
       this.root.appendChild(this.agendaButton);
+      this.root.appendChild(this.undoButton);
+      this.root.appendChild(this.redoButton);
       // this.fill = "lightgray"
     } else {
       // this.root.appendChild(this.filler)

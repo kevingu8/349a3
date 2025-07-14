@@ -66,9 +66,9 @@ export class ModeSwitch implements Observer {
 
     if (this.model.getMode() === "Overview") {
       // this.root.appendChild(this.filler)
-      this.root.appendChild(this.agendaButton);
       this.root.appendChild(this.undoButton);
       this.root.appendChild(this.redoButton);
+      this.root.appendChild(this.agendaButton);
       // this.fill = "lightgray"
     } else {
       // this.root.appendChild(this.filler)

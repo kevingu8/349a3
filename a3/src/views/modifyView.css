@@ -43,18 +43,15 @@
   color: #333;
 }
 
-/* description input fills remaining space */
-.modify-view > #modify-description input[type="text"] {
-  flex: 1;
-  padding: 6px 8px;
-  font-size: 14px;
-  height: 32px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.2s, background-color 0.2s;
+.modify-view > .modify-row {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 0;
 }
+
 
 /* ─── GRID ROWS (Day-of-Week, Start Time, End Time) ───────────────────────── */
 .modify-view > #day-of-week,

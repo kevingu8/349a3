@@ -7,7 +7,7 @@
   height: 100%;
   box-sizing: border-box;
   padding: 16px;
-  background-color: #fff;
+  background-color: lightgrey;
 }
 
 /* The description area (fills available space) */
@@ -19,7 +19,8 @@
   align-items: center;
   gap: 8px;
   font-size: 1rem;
-  color: #333;
+  color: lightgrey;
+  background-color: lightgrey;
 }
 
 /* Button row at the bottom */

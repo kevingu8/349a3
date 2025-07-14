@@ -11,7 +11,7 @@
   height: 100%;               /* fill available vertical space */
   width: 100%;                /* fill available horizontal space */
   /* gap: 12px;                  space between toolbar and grid */
-  padding: 16px;              /* inner breathing room */
+  /* padding: 16px;              inner breathing room */
   box-sizing: border-box;     /* include padding in size */
   background-color: #fff;     /* or match your app bg */
 }

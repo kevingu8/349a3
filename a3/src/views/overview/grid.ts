@@ -37,6 +37,7 @@ export class Grid  implements Observer {
 
     this.container = document.createElement("div");
     this.container.className = "grid";
+    this.container.style.height = `${24 * 24}px`;
 
     this.dayLabels.className = "day-labels";
     this.dayBodies.className = "day-bodies";

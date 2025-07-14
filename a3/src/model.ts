@@ -1,4 +1,5 @@
 import { Subject } from "./observer";
+import { UndoManager } from "./undo";
 
 export type Event = {
   description: string;

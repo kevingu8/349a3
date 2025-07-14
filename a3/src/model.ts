@@ -21,12 +21,16 @@ export class Model extends Subject {
   edit: boolean = false;
 
   day_of_week = [
-    "Sunday",  "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
   ];
 
-  day_of_week_sim = [
-    "Su",  "Mo", "Tu", "We", "Th", "Fr", "Sa"
-  ];
+  day_of_week_sim = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   constructor() {
     super();
@@ -58,7 +62,7 @@ export class Model extends Subject {
     while (this.events.length < 4) {
       const randomIndex = Math.floor(Math.random() * this.all_events.length);
       const event = this.all_events[randomIndex];
-      if (!this.events.some(e => this.isEquivalentEvent(e, event))) {
+      if (!this.events.some((e) => this.isEquivalentEvent(e, event))) {
         this.events.push({ ...event, selected: false });
       }
     }
@@ -76,22 +80,24 @@ export class Model extends Subject {
   }
 
   get numberSelectedEvents(): number {
-    return this.events.filter(event => event.selected).length;
+    return this.events.filter((event) => event.selected).length;
   }
 
   get selectedEvents(): Event[] {
-    return this.events.filter(event => event.selected);
+    return this.events.filter((event) => event.selected);
   }
 
   isEquivalentEvent(event1: Event, event2: Event): boolean {
-    return event1.description === event2.description &&
-           event1.day === event2.day &&
-           event1.start === event2.start &&
-           event1.end === event2.end;
+    return (
+      event1.description === event2.description &&
+      event1.day === event2.day &&
+      event1.start === event2.start &&
+      event1.end === event2.end
+    );
   }
 
   getEventsByDay(day: number): Event[] {
-    return this.events.filter(event => event.day === day);
+    return this.events.filter((event) => event.day === day);
   }
 
   getMode(): "Overview" | "Agenda" {
@@ -108,40 +114,82 @@ export class Model extends Subject {
   }
 
   selectAllEvents() {
-    this.events.forEach(event => {
+    this.events.forEach((event) => {
       event.selected = true;
     });
     this.notifyObservers();
   }
 
   deselectAllEvents() {
-    this.events.forEach(event => {
+    this.events.forEach((event) => {
       event.selected = false;
     });
     this.notifyObservers();
   }
 
   selectEvent(event: Event) {
-    this.events.forEach(e => {
+    this.undoMgr.execute({
+      do: () => {
+        this.events.forEach((e) => {
+          if (this.isEquivalentEvent(e, event)) {
+            e.selected = !e.selected;
+          }
+        });
+      },
+
+      undo: () => {
+        this.events.forEach((e) => {
+          if (this.isEquivalentEvent(e, event)) {
+            e.selected = !e.selected;
+          }
+        });
+      },
+    });
+    this.events.forEach((e) => {
       if (this.isEquivalentEvent(e, event)) {
         e.selected = !e.selected;
       }
-    })
+    });
     this.notifyObservers();
   }
 
-  modifyEvent(event: Event, newDescription: string, newDay: number, newStart: number, newEnd: number) {
-    const index = this.events.findIndex(e => this.isEquivalentEvent(e, event));
-    if (index !== -1) {
-      this.events[index] = {
-        ...this.events[index],
-        description: newDescription,
-        day: newDay,
-        start: newStart,
-        end: newEnd,
-      };
-      
+  modifyEvent(
+    event: Event,
+    newDescription: string,
+    newDay: number,
+    newStart: number,
+    newEnd: number
+  ) {
+    const index = this.events.findIndex((e) =>
+      this.isEquivalentEvent(e, event)
+    );
+
+    if (index === -1) {
+      return;
     }
+    const oldEvent = this.events[index];
+    const newEvent = {
+      ...this.events[index],
+      description: newDescription,
+      day: newDay,
+      start: newStart,
+      end: newEnd,
+    };
+    this.undoMgr.execute({
+      do: () => {
+        this.events[index] = newEvent;
+      },
+
+      undo: () => {
+        const idx = this.events.findIndex((e) =>
+          this.isEquivalentEvent(e, newEvent)
+        );
+        if (idx !== -1) {
+          this.events[idx] = oldEvent;
+        }
+      },
+    });
+    this.events[index] = newEvent;
     this.edit = false;
     this.notifyObservers();
   }
@@ -149,6 +197,14 @@ export class Model extends Subject {
   cancelModifyEvent() {
     this.edit = false;
     this.notifyObservers();
+  }
+
+  get canUndo() {
+    return this.undoMgr.canUndo;
+  }
+
+  get canRedo() {
+    return this.undoMgr.canRedo;
   }
 
   undo() {
@@ -162,39 +218,101 @@ export class Model extends Subject {
   }
 
   removeSelectedEvent() {
-    const selectedEvents = this.events.filter(event => event.selected);
-    selectedEvents.forEach(selectedEvent => {
-      this.events = this.events.filter((e) => !this.isEquivalentEvent(e, selectedEvent));
+    const selectedEvents = this.events.filter((event) => event.selected);
+
+    this.undoMgr.execute({
+      do: () => {
+        selectedEvents.forEach((selectedEvent) => {
+          this.events = this.events.filter(
+            (e) => !this.isEquivalentEvent(e, selectedEvent)
+          );
+        });
+
+        selectedEvents.forEach((selectedEvent) => {
+          if (
+            !this.all_events.some((e) =>
+              this.isEquivalentEvent(e, selectedEvent)
+            )
+          ) {
+            this.all_events.push(selectedEvent);
+          }
+        });
+      },
+
+      undo: () => {
+        selectedEvents.forEach((selectedEvent) => {
+          this.events = [...this.events, selectedEvent];
+        });
+
+        selectedEvents.forEach((selectedEvent) => {
+          if (
+            !this.all_events.some((e) =>
+              this.isEquivalentEvent(e, selectedEvent)
+            )
+          ) {
+            const idx = this.all_events.findIndex((e) =>
+              this.isEquivalentEvent(e, selectedEvent)
+            );
+            if (idx !== -1) {
+              this.all_events.splice(idx, 1);
+            }
+          }
+        });
+      },
     });
 
     selectedEvents.forEach((selectedEvent) => {
-      if (!this.all_events.some((e) => this.isEquivalentEvent(e, selectedEvent))) {
+      this.events = this.events.filter(
+        (e) => !this.isEquivalentEvent(e, selectedEvent)
+      );
+    });
+
+    selectedEvents.forEach((selectedEvent) => {
+      if (
+        !this.all_events.some((e) => this.isEquivalentEvent(e, selectedEvent))
+      ) {
         this.all_events.push(selectedEvent);
       }
-    })
+    });
 
     this.notifyObservers();
   }
 
   addEvent() {
     let success = false;
+    let eventToAdd = this.all_events[0];
     if (this.events.length < 10) {
       while (!success) {
         const randomIndex = Math.floor(Math.random() * this.all_events.length);
         const newEvent = { ...this.all_events[randomIndex], selected: false };
 
-        if (!this.events.some(e => this.isEquivalentEvent(e, newEvent))) {
-          this.events.push(newEvent);
-          this.notifyObservers();
+        if (!this.events.some((e) => this.isEquivalentEvent(e, newEvent))) {
           success = true;
+          eventToAdd = newEvent;
         }
       }
-      this.events.sort((a, b) => a.day - b.day || a.start - b.start);
     }
+
+    this.undoMgr.execute({
+      do: () => {
+        this.events.push(eventToAdd);
+        this.events.sort((a, b) => a.day - b.day || a.start - b.start);
+      },
+      undo: () => {
+        const idx = this.events.findIndex((e) =>
+          this.isEquivalentEvent(e, eventToAdd)
+        );
+        if (idx !== -1) {
+          this.events.splice(idx, 1);
+        }
+        this.events.sort((a, b) => a.day - b.day || a.start - b.start);
+      },
+    });
+
+    this.events.push(eventToAdd);
+    this.events.sort((a, b) => a.day - b.day || a.start - b.start);
+    this.notifyObservers();
   }
-
-
-
 
   clearEvents() {
     this.events = [];

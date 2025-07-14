@@ -71,6 +71,8 @@ export class ModeSwitch implements Observer {
   update() {
     this.root.replaceChildren();
     this.agendaButton.disabled =  this.model.selectedEvents.length === 0;
+    this.undoButton.disabled = !this.model.canUndo;
+    this.redoButton.disabled = !this.model.canRedo;
 
     if (this.model.getMode() === "Overview") {
       // this.root.appendChild(this.filler)

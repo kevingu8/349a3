@@ -17,7 +17,7 @@ export class EventLabel implements Observer {
     // 1) create wrapper
     this.container = document.createElement("div");
     this.container.className = "event-label";
-    this.container.style.height = `${24 * (event.end - event.start)}`;
+    this.container.style.height = `${24 * (event.end - event.start)}px`;
 
     // 2) checkbox + unique ID
     this.checkbox = document.createElement("input");

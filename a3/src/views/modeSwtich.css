@@ -12,13 +12,15 @@
   justify-content: flex-end;/* push children to the right */
   align-items: center;      /* vertically center if your bar has height */
   width: 100%;  
-  background-color: lightgrey;            /* make sure it spans the full bar */
+  background-color: lightgrey;  
+  padding: 8px          /* make sure it spans the full bar */
   /* optionally add padding, background, etc. */
 }
 
 /* 2. Base styles for both buttons */
 .mode-switch button {
   padding: 6px 14px;
+  margin: 0 4px;
   font-size: 0.9rem;
   border: 1px solid #888;
   border-radius: 4px;
